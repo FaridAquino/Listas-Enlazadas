@@ -27,33 +27,48 @@ public:
 
     } // Retorna el elemento al final
     void push_front(T elemento) {
-        Nodo<T>* new_node = new Nodo<T>(elemento);
+        auto* new_node = new Nodo<T>(elemento);
         new_node->next = head;
         head = new_node;
 
     } // Agrega un elemento al comienzo
     void push_back(T elemento) {
-        Nodo<T>* new_node = new Nodo<T>(elemento);
+        auto* new_node = new Nodo<T>(elemento);
         Nodo<T>* temp = head;
         while (temp->next != nullptr) {
             temp = temp->next;
         }
         temp->next = new_node;
     } // Agrega un elemento al final
-    T pop_front() {
-
+    void pop_front() {
+        Nodo<T>* temp = head;
+        head = head->next;
+        delete temp;
     } // Remueve el elemento al comienzo
-    T pop_back() {
+    void pop_back() {
+        if (head->next == nullptr) {
+            delete head;
+        }else {
+            Nodo<T>* temp = head;
+            while (temp->next->next != nullptr) {
+                temp = temp->next;
+            }
+            delete temp->next;
+            temp->next = nullptr;
+        }
 
     } // Remueve el elemento final
 
 };
 
 int main() {
-    Nodo<int>* head = new Nodo(5);
+    auto* head = new Nodo(5);
     Lista<int> lista1 = Lista(head);
     lista1.push_back(10);
     lista1.push_back(15);
+    lista1.push_front(20);
+    lista1.pop_front();
+    lista1.pop_back();
     cout << lista1.front() << endl;
     cout << lista1.back() << endl;
 
