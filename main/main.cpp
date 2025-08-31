@@ -59,6 +59,22 @@ public:
         }
 
     } // Remueve el elemento final
+
+    T& operator [] (int indice) {
+        int contador=0;
+        Nodo<T>* p1=head;
+
+        while (contador!=indice and p1!=nullptr) {
+            p1=p1->next;
+            contador++;
+        }
+
+        if (p1==nullptr) {
+            return 0;
+        }
+
+        return p1->dato;
+    }
       
 	//verificar si una lista esta vacia o no
     bool empty(){
