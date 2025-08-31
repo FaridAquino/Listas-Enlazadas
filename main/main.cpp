@@ -15,6 +15,7 @@ private:
     Nodo<T>* head;
 public:
     explicit Lista(Nodo<T>* _head):head(_head) {}
+    ~Lista() { clear(); }
     T front() {
         return head->dato;
     } // Retorna el elemento al comienzo
@@ -58,6 +59,77 @@ public:
         }
 
     } // Remueve el elemento final
+      
+	//verificar si una lista esta vacia o no
+    bool empty(){
+        if (head == NULL){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //retornar tamaño de la lista
+    int size(){
+        Nodo<T>* temp = head;
+        int N = 0;
+        while(temp != NULL){
+            N++;
+            temp = temp->next;
+        }
+        return N;
+    }
+
+    //eliminar todos los nodos de la lista
+    void clear(){
+        while(head != NULL){
+            Nodo<T>* temp = head;
+            head = head->next;
+            delete temp;
+        }
+        head = NULL;
+    }
+
+    //funcion de ordenamiento (insertion sort)
+    void sort() {
+        if (!head || !head->next) return;
+        Nodo<T> dummy(T{});
+        dummy.next = head;
+
+        Nodo<T>* ord  = head;
+        Nodo<T>* temp = head->next;
+
+        while (temp != nullptr) {
+            if (ord->dato <= temp->dato) {
+                ord = temp;
+                temp = temp->next;
+            } else {
+                Nodo<T>* prev = &dummy;
+                while (prev->next != nullptr && prev->next->dato <= temp->dato) {
+                    prev = prev->next;
+                }
+                ord->next = temp->next;
+                temp->next = prev->next;
+                prev->next = temp;
+                temp = ord->next;
+            }
+        }
+        head = dummy.next;
+    }
+
+    // invertir lista
+    void reverse() {
+        Nodo<T>* cab = nullptr;
+        Nodo<T>* temp = head;
+
+        while (temp != nullptr) {
+            Nodo<T>* forward = temp->next;
+            temp->next = cab;
+            cab = temp;
+            temp = forward;
+        }
+        head = cab;
+    }
 
 };
 
