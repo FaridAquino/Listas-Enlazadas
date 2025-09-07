@@ -70,7 +70,7 @@ public:
         }
 
         if (p1==nullptr) {
-            return 0;
+            throw std::out_of_range("Indice fuera de rango");
         }
 
         return p1->dato;
